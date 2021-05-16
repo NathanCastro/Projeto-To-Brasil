@@ -1,62 +1,72 @@
 import { Component } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { finalize } from 'rxjs/operators';
 
+import { ConfirmationModalComponent } from './../shared/components/confirmation-modal/confirmation-modal.component';
 import { DataService } from './../shared/services/data.service';
-import { LatestNews } from './latestNews.interface';
+import { News } from './news.interface';
+
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent  {
  
   logo_URL="https://pbs.twimg.com/profile_images/1210577367921516544/D14OTzAu_400x400.jpg"
   img_src= "assets/search.svg"
+  URL_busca="assets/document.svg"
+  seta_url="assets/down.svg"
+
+  latestNews: Array<News>;
+  filteredNews: Array<News>;
+  isLoading = true;
+  exibirIconeSemBuscas = true;
+  search = '';
   
-  isCollapsed = true;
-  jaFoi= []
+  
 
-  latestNews: LatestNews;
 
-  constructor(private dataService: DataService) {
-
-  }
+  constructor(private dataService: DataService,
+    private modalService: BsModalService
+  ) { }
 
   ngOnInit() {
-     this.dataService.getLatestNews()
-      // .pipe(
-      //   finalize(() => this.isLoading = false)
-      // )
-      .subscribe(
-        response => this.onSuccessGetLatestNews(response),
-        error => this.onErrorGetLatestNews(error)
-      )
+    
+    this.dataService.getLatestNews()
+    .pipe(
+      finalize(() => this.isLoading = false)
+    )
+    .subscribe(
+      response => this.onSuccessGetLatestNews(response),
+      error => this.onErrorGetLatestNews(error)
+    )
+
+    
   }
+
   onErrorGetLatestNews(error: any) {
-    console.log(error);
   }
-  onSuccessGetLatestNews(response: LatestNews) {
+  onSuccessGetLatestNews(response: News[]) {
     this.latestNews = response;
-    console.log(this.latestNews);
   }
 
-  /*modalRef: BsModalRef;
-  message: string;
-  constructor(private modalService: BsModalService) {}
- 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  searchNews() {
+    this.filteredNews = this.latestNews.filter(x => x.title.includes(this.search));
+    this.exibirIconeSemBuscas = false;
+    //this.filteredNews = this.latestNews
+    
   }
- 
-  confirm(): void {
-    this.message = 'Confirmed!';
-    this.modalRef.hide();
+  
+
+  showConfirmationModal() {
+    this.modalService.show(ConfirmationModalComponent, {
+      class: "modal-sm"
+    });
   }
+
  
-  decline(): void {
-    this.message = 'Declined!';
-    this.modalRef.hide();
-  }*/
-
-
 }

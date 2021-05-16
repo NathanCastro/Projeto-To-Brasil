@@ -10,13 +10,13 @@ import { Observable } from 'rxjs';
 export class DataService {
 
   result: any;
-  baseUrl = 'https://api.currentsapi.services/v1';
+  baseUrl = 'http://localhost:3000';
 
 
   constructor(private http: HttpClient)  { }
 
   getLatestNews(): Observable<any>{
-    return this.http.get(`${this.baseUrl}/latest-news`);
+    return this.http.get(`${this.baseUrl}/news`);
   }
 }
 

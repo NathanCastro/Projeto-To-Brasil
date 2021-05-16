@@ -1,4 +1,4 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -10,16 +10,15 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-    const token = "UMSYvy_PqobgHKB32vU9JPjDXRoOesfdkgjVZ4-PVOul4QDp";
 
-    if(token) {
-      request = request.clone({
-        setHeaders: {
-          apiKey: token,
-        }
-      });
-    }
-
+    request = request.clone({
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Referrer-Policy': 'no-referrer',
+        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+      })
+    });
     return next.handle(request);
   }
 }

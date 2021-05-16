@@ -4,43 +4,36 @@
             
         </path>
     </svg> 
-    <div class="testeww"><img [src]="logo_URL" width="200" height="200"></div> 
+    <div class="header__logo"><img [src]="logo_URL" width="200" height="200"></div> 
 
     <div class="input-group mb-3 header__formulario">  
             
-        <input type="text" class="form-control teste" placeholder="digite algo" aria-label="Recipient's username" aria-describedby="button-addon2" id="digite">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+        <input type="text" [(ngModel)]="search"name="search"  class="form-control header__filtro" placeholder="digite o nome de um jornal"  id="filter" />
+        <button class="btn btn-outline-secondary header__botao__pesquisa" (click)="searchNews()" type="button" id="button-addon2 ">
             <img [src]="img_src" width="32" height="32">            
         </button>
     </div>
 
-    <div class="oi" >
-        <img src="assets/document.svg" width="50" height="40">
+    <div class="header__busca" *ngIf="exibirIconeSemBuscas">
+        <img [src]="URL_busca" width="50" height="40">
         <p> você não buscou nada</p>
     </div>
     
-    <div *ngIf="jaFoi" class="ola">
-        <span>is Lorem Ipsum? Why do we use it? Why do we use it?</span> 
-        <button type="button" class="btn btn-primary" (click)="isCollapsed = !isCollapsed"
-            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">Ver detalhe da ação
-            <img src="assets/down.svg">
-        </button>
-
-        <div id="collapseBasic" [collapse]="isCollapsed">
-            <div class="well well-lg card card-block card-header">Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker.</div>
-            
-            <!--<button type="button" class="btn btn-primary" (click)="openModal(template)">Open modal</button>
-                <br><br>
-                <pre class="card card-block card-header">{{message}}</pre>
-                <ng-template #template>
-                <div class="modal-body text-center">
-                    <p>Do you want to confirm?</p>
-                    <button type="button" class="btn btn-default"  >Sim</button>
-                    <button type="button" class="btn btn-primary" >Não</button>
-                </div>
-                </ng-template>-->
+    <div class="card header__card__father" *ngFor="let item of filteredNews" >
+        <div class="header__card">
+            <span>{{ item.title }}</span> 
+            <button type="button" class="btn btn-primary header__botao__card" (click)="item.isCollapsed = !item.isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                Ver detalhe da ação
+                <img [src]="seta_url">
+            </button>
+        </div>    
+        <div id="collapseBasic header__card__segundo" *ngIf="item.isCollapsed">
+            <div class="well well-lg card card-block card-header header__card__son">
+               <span class="header__card__son__descricao">{{ item.description }}</span>             
+               <button type="button" class="btn btn-primary header__button__modal" (click)="showConfirmationModal()">
+                    Ver mais
+                </button>
+            </div>
         </div>
     </div>
 </div>   
-
-

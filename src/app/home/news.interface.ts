@@ -8,4 +8,5 @@ export interface News {
     published: Date;
     title: string;
     url: string;
+    isCollapsed:boolean;
 }
