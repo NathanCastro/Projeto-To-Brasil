@@ -58,6 +58,9 @@ export class HomeComponent  {
     this.filteredNews = this.latestNews.filter(x => x.title.includes(this.search));
     this.exibirIconeSemBuscas = false;
     //this.filteredNews = this.latestNews
+    if(this.search=""){
+      return this.filteredNews 
+    }
     
   }
   

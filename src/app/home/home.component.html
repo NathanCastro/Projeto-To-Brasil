@@ -6,13 +6,13 @@
     </svg> 
     <div class="header__logo"><img [src]="logo_URL" width="200" height="200"></div> 
 
-    <div class="input-group mb-3 header__formulario">  
+    <form class="input-group mb-3 header__formulario" name="myForm">  
             
-        <input type="text" [(ngModel)]="search"name="search"  class="form-control header__filtro" placeholder="digite o nome de um jornal"  id="filter" />
-        <button class="btn btn-outline-secondary header__botao__pesquisa" (click)="searchNews()" type="button" id="button-addon2 ">
+        <input type="text" [(ngModel)]="search" required name="search"  class="form-control header__filtro" placeholder="digite o nome de um jornal"  id="filter" />
+        <button class="btn btn-outline-secondary header__botao__pesquisa"  (click)="searchNews()" type="button" id="button-addon2 ">
             <img [src]="img_src" width="32" height="32">            
         </button>
-    </div>
+    </form>
 
     <div class="header__busca" *ngIf="exibirIconeSemBuscas">
         <img [src]="URL_busca" width="50" height="40">
