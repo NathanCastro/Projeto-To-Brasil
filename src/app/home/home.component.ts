@@ -26,7 +26,7 @@ export class HomeComponent  {
   isLoading = true;
   exibirIconeSemBuscas = true;
   search = '';
-  
+ 
   
 
 

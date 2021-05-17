@@ -21,7 +21,7 @@
     
     <div class="card header__card__father" *ngFor="let item of filteredNews" >
         <div class="header__card">
-            <span>{{ item.title }}</span> 
+            <span>{{ item.title| titlecase}}</span> 
             <button type="button" class="btn btn-primary header__botao__card" (click)="item.isCollapsed = !item.isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
                 Ver detalhe da ação
                 <img [src]="seta_url">
